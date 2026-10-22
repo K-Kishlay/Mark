@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PPT Competition Scoring System</title>
+<style>
+:root{--blue:#1758d6;--blue2:#0e3e9e;--ink:#13264b;--muted:#68758c;--bg:#f4f7fc;--line:#e2e8f2;--green:#14804a;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:3}
+.top{max-width:1200px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.brand{font-weight:800;display:flex;align-items:center;gap:9px;color:#0c347e}.brand span{font-size:23px}
+nav{display:flex;gap:6px;flex-wrap:wrap}button,.navbtn{font:inherit;cursor:pointer;border:0;border-radius:9px;padding:10px 13px}
+.navbtn{background:transparent;color:#3b4b68}.navbtn.active,.primary{background:var(--blue);color:white}.primary:hover{background:var(--blue2)}button:disabled{opacity:.55;cursor:not-allowed}
+main{max-width:1200px;margin:26px auto;padding:0 20px 48px}.page{display:none}.page.active{display:block}
+.hero{padding:32px;border-radius:18px;background:linear-gradient(125deg,#e8efff,#fff 65%);border:1px solid #dce6fb;display:grid;grid-template-columns:1.5fr 1fr;gap:22px;align-items:center}
+h1{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 12px}h2{font-size:24px;margin:0 0 8px}h3{font-size:17px;margin:0 0 8px}.muted{color:var(--muted)}.small{font-size:12px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.stat,.card{background:white;border:1px solid var(--line);border-radius:14px;padding:18px}.stat strong{display:block;font-size:24px;margin-bottom:3px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.secondary{background:white;border:1px solid var(--line);color:var(--ink)}.danger{background:#fff0ef;color:var(--red)}.success{background:#e9f8ef;color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{margin-bottom:14px}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}input,select{width:100%;padding:11px 12px;border:1px solid #cfd8e8;border-radius:9px;background:white;color:var(--ink);font:inherit}input:focus,select:focus{outline:2px solid #b9d0ff;border-color:var(--blue)}
+.field{margin-bottom:14px}.criteria{width:100%;border-collapse:collapse}.criteria th,.criteria td{text-align:left;border-bottom:1px solid var(--line);padding:10px 8px}.criteria th{font-size:12px;color:var(--muted)}.criteria input{min-width:76px}
+.tablewrap{overflow:auto;background:white;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;white-space:nowrap}th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}th{font-size:12px;color:var(--muted);background:#f9fbfe}tr:last-child td{border-bottom:0}.rank{font-weight:800;color:var(--blue)}
+.pill{display:inline-block;background:#edf3ff;color:#1747a4;border-radius:99px;padding:4px 9px;font-size:12px;font-weight:700}
+.notice{padding:12px 14px;border-radius:10px;background:#fff8e6;border:1px solid #f2dfaa;color:#72520a;margin:12px 0}
+.status{padding:10px 12px;border-radius:9px;background:#e9f8ef;color:#17643e;margin:12px 0;display:none}.status.show{display:block}
+footer{max-width:1200px;margin:0 auto;padding:0 20px 28px;color:var(--muted);font-size:12px}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.grid,.two{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}nav{width:100%}.navbtn{padding:9px 10px}main{padding:0 12px 32px}}
+</style>
+</head>
+<body>
+<header><div class="top">
+  <div class="brand"><span>🏆</span> PPT Competition</div>
+  <nav aria-label="Main navigation">
+    <button class="navbtn active" data-page="home">Home</button>
+    <button class="navbtn" data-page="score">Enter Scores</button>
+    <button class="navbtn" data-page="results">Results</button>
+    <button class="navbtn" data-page="admin">Admin & Backup</button>
+  </nav>
+</div></header>
+<main>
+<section id="home" class="page active">
+  <div class="hero">
+    <div><span class="pill">CLASSES 6–12 · 3 JUDGES · 5 CRITERIA</span>
+      <h1 style="margin-top:15px">PPT Competition<br>Scoring System</h1>
+      <p class="muted">A simple scoring prototype with seven class-wise leaderboards, score validation, and JSON backup export/import.</p>
+      <div class="actions"><button class="primary" onclick="showPage('score')">Enter marks →</button><button class="secondary" onclick="showPage('results')">View results</button></div>
+    </div>
+    <div class="card" style="margin:0"><h3>Competition structure</h3>
+      <p>🟦 <b>Group A:</b> Classes 6 and 7</p><p>🟩 <b>Group B:</b> Classes 8 and 9</p><p>🟪 <b>Group C:</b> Classes 10, 11 and 12</p>
+      <p class="small">Topic groups do not determine rankings. Each class competes only against its own sections.</p>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><strong>26</strong><span class="muted">Section entries</span></div>
+    <div class="stat"><strong>3</strong><span class="muted">Judges</span></div>
+    <div class="stat"><strong>50</strong><span class="muted">Max per judge</span></div>
+    <div class="stat"><strong>150</strong><span class="muted">Max combined</span></div>
+  </div>
+  <div class="notice"><b>Prototype limitation:</b> this version saves to the current browser's local storage. It does not synchronize scores between different phones/computers. For multiple judges on separate devices, add shared storage or use one central device.</div>
+</section>
+
+<section id="score" class="page">
+  <div class="sectionhead"><div><h2>Enter scores</h2><div class="muted">Select a judge, class and section, then enter five marks out of 10.</div></div><span class="pill">Max 50 per judge</span></div>
+  <div class="two">
+    <div class="card">
+      <div class="field"><label for="judge">Judge</label><select id="judge"><option value="Judge 1">Judge 1</option><option value="Judge 2">Judge 2</option><option value="Judge 3">Judge 3</option></select></div>
+      <div class="field"><label for="classSelect">Class</label><select id="classSelect"></select></div>
+      <div class="field"><label for="sectionSelect">Section</label><select id="sectionSelect"></select></div>
+      <div class="field"><label for="participant">Entry name (optional)</label><input id="participant" placeholder="e.g. Class 9 — Section A"></div>
+      <div class="small">One scorecard per judge per class-section. Re-saving updates that judge's existing scorecard.</div>
+    </div>
+    <div class="card">
+      <h3>Criteria</h3>
+      <table class="criteria"><thead><tr><th>Criterion</th><th>Marks / 10</th></tr></thead><tbody id="criteriaRows"></tbody></table>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px"><b>Total</b><strong id="scoreTotal" style="font-size:26px">0 / 50</strong></div>
+      <div class="actions"><button class="secondary" id="clearForm">Clear form</button><button class="primary" id="saveScore">Save scores</button></div>
+      <div id="scoreStatus" class="status" role="status"></div>
+    </div>
+  </div>
+</section>
+
+<section id="results" class="page">
+  <div class="sectionhead"><div><h2>Results dashboard</h2><div class="muted">Each class has its own ranking. Incomplete entries are clearly marked.</div></div><button class="secondary" onclick="renderResults()">Refresh results</button></div>
+  <div class="field" style="max-width:260px"><label for="resultsClass">Choose class</label><select id="resultsClass"></select></div>
+  <div class="stats" id="resultStats"></div>
+  <div class="tablewrap"><table><thead><tr><th>Rank</th><th>Section</th><th>Judge 1 / 50</th><th>Judge 2 / 50</th><th>Judge 3 / 50</th><th>Total / 150</th><th>Status</th></tr></thead><tbody id="resultsBody"></tbody></table></div>
+  <p class="small">Ranking uses combined marks from submitted judge scorecards only when all three judges have submitted. Incomplete entries are shown without a final rank.</p>
+</section>
+
+<section id="admin" class="page">
+  <div class="sectionhead"><div><h2>Admin & backup</h2><div class="muted">Export current browser data regularly and keep the downloaded file on another device.</div></div><span class="pill">Local data</span></div>
+  <div class="grid">
+    <div class="card"><h3>📦 Export backup</h3><p class="muted">Download all saved scorecards and metadata as a JSON file.</p><button class="primary" id="exportBtn">Download JSON backup</button></div>
+    <div class="card"><h3>♻️ Import / restore</h3><p class="muted">Restore a previous JSON backup into this browser.</p><input type="file" id="importFile" accept=".json,application/json" style="margin-bottom:10px"><button class="secondary" id="importBtn">Validate and restore</button></div>
+    <div class="card"><h3>🧹 Clear local scores</h3><p class="muted">Permanently removes scores from this browser. Export first.</p><button class="danger" id="clearAll">Clear all scores</button></div>
+  </div>
+  <div class="card"><h3>Saved scorecards</h3><div id="adminSummary" class="muted">No scores saved yet.</div><div id="adminStatus" class="status" role="status"></div></div>
+  <div class="notice"><b>Backup safety:</b> Import replaces the current score data after validation. Export before restoring if you want to preserve the current state. This prototype has no user authentication; do not treat the Judge selector as secure access control.</div>
+</section>
+</main>
+<footer>Prototype v1 · Static HTML/CSS/JavaScript · Local browser storage · No score data is sent to a server.</footer>
+<script>
+const CLASSES = [6,7,8,9,10,11,12];
+const CRITERIA = ["Content & Understanding","Creativity & Originality","Presentation Skills","Visual Design & Clarity","Time Management"];
+const KEY = "pptCompetitionScores_v1";
+let scores = loadScores();
+
+function loadScores(){
+  try { const raw=localStorage.getItem(KEY); if(!raw) return {}; const parsed=JSON.parse(raw); return parsed && typeof parsed==="object" ? parsed : {}; }
+  catch(e){ return {}; }
+}
+function persist(){ localStorage.setItem(KEY,JSON.stringify(scores)); }
+function keyFor(c,s,j){ return `${c}-${s}-${j}`; }
+function sectionsFor(c){ return Number(c)>=11 ? ["A","B","C"] : ["A","B","C","D"]; }
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+  document.querySelectorAll(".navbtn").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+  if(id==="results") renderResults();
+  if(id==="admin") renderAdmin();
+  if(id==="score") loadExistingScore();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".navbtn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+
+function populateClasses(select){
+  select.innerHTML=CLASSES.map(c=>`<option value="${c}">Class ${c}</option>`).join("");
+}
+populateClasses(document.getElementById("classSelect"));
+populateClasses(document.getElementById("resultsClass"));
+function populateSections(){
+  const c=Number(document.getElementById("classSelect").value);
+  document.getElementById("sectionSelect").innerHTML=sectionsFor(c).map(s=>`<option value="${s}">Section ${s}</option>`).join("");
+  loadExistingScore();
+}
+document.getElementById("classSelect").addEventListener("change",populateSections);
+document.getElementById("sectionSelect").addEventListener("change",loadExistingScore);
+document.getElementById("judge").addEventListener("change",loadExistingScore);
+document.getElementById("resultsClass").addEventListener("change",renderResults);
+
+const criteriaRows=document.getElementById("criteriaRows");
+criteriaRows.innerHTML=CRITERIA.map((c,i)=>`<tr><td>${c}</td><td><input aria-label="${c}" class="mark" type="number" min="0" max="10" step="1" value="0" inputmode="numeric"></td></tr>`).join("");
+document.querySelectorAll(".mark").forEach(input=>input.addEventListener("input",updateTotal));
+function marks(){return [...document.querySelectorAll(".mark")].map(i=>i.value===""?NaN:Number(i.value));}
+function updateTotal(){
+  const m=marks(); const total=m.every(Number.isFinite)?m.reduce((a,b)=>a+b,0):NaN;
+  document.getElementById("scoreTotal").textContent=`${Number.isFinite(total)?total:"—"} / 50`;
+}
+function selected(){return {c:Number(document.getElementById("classSelect").value),s:document.getElementById("sectionSelect").value,j:document.getElementById("judge").value};}
+function loadExistingScore(){
+  if(!document.getElementById("sectionSelect").value) return;
+  const {c,s,j}=selected(); const entry=scores[keyFor(c,s,j)];
+  document.getElementById("participant").value=entry?.participant || `Class ${c} — Section ${s}`;
+  document.querySelectorAll(".mark").forEach((input,i)=>input.value=entry?entry.marks[i]:0);
+  updateTotal(); hideStatus("scoreStatus");
+}
+function showStatus(id,msg,kind="ok"){
+  const el=document.getElementById(id);el.textContent=msg;el.className="status show";
+  if(kind!=="ok"){el.style.background="#fff0ef";el.style.color="#9f1d16";}else{el.style.background="#e9f8ef";el.style.color="#17643e";}
+}
+function hideStatus(id){const el=document.getElementById(id);el.className="status";el.textContent="";}
+document.getElementById("clearForm").addEventListener("click",()=>{
+  document.querySelectorAll(".mark").forEach(i=>i.value=0);updateTotal();hideStatus("scoreStatus");
+});
+document.getElementById("saveScore").addEventListener("click",()=>{
+  const {c,s,j}=selected(); const m=marks();
+  if(!m.every(Number.isInteger)||m.some(n=>n<0||n>10)){showStatus("scoreStatus","Every criterion must be a whole number from 0 to 10.","err");return;}
+  const id=keyFor(c,s,j);
+  scores[id]={class:c,section:s,judge:j,participant:document.getElementById("participant").value.trim()||`Class ${c} — Section ${s}`,marks:m,total:m.reduce((a,b)=>a+b,0),updatedAt:new Date().toISOString()};
+  try{persist();showStatus("scoreStatus",`Saved locally: ${scores[id].total}/50 for Judge ${j.replace("Judge ","")}. Export a backup regularly.`);renderAdmin();}
+  catch(e){showStatus("scoreStatus","Could not save to browser storage. Export/recovery may be needed.","err");}
+});
+function scoreOf(c,s,j){return scores[keyFor(c,s,j)]||null;}
+function renderResults(){
+  const c=Number(document.getElementById("resultsClass").value||6);
+  const rows=sectionsFor(c).map(s=>{
+    const js=[1,2,3].map(n=>scoreOf(c,s,`Judge ${n}`));
+    const complete=js.every(Boolean); const total=complete?js.reduce((sum,x)=>sum+x.total,0):null;
+    return {s,js,complete,total};
+  });
+  const ranked=rows.filter(r=>r.complete).sort((a,b)=>b.total-a.total);
+  ranked.forEach((r,i)=>r.rank=i+1);
+  const submitted=rows.reduce((n,r)=>n+r.js.filter(Boolean).length,0);
+  document.getElementById("resultStats").innerHTML=`<div class="stat"><strong>${rows.length}</strong><span class="muted">Sections in class</span></div><div class="stat"><strong>${ranked.length}</strong><span class="muted">Complete scorecards</span></div><div class="stat"><strong>${submitted}</strong><span class="muted">Judge submissions</span></div><div class="stat"><strong>${ranked.length?Math.max(...ranked.map(r=>r.total)):"—"}</strong><span class="muted">Highest total / 150</span></div>`;
+  rows.sort((a,b)=>a.complete&&b.complete?b.total-a.total:a.complete?-1:b.complete?1:a.s.localeCompare(b.s));
+  document.getElementById("resultsBody").innerHTML=rows.map(r=>`<tr><td class="rank">${r.complete?(r.rank||"—"):"—"}</td><td><b>Section ${r.s}</b></td>${r.js.map(x=>`<td>${x?x.total:"—"}</td>`).join("")}<td><b>${r.complete?r.total:"—"}</b></td><td>${r.complete?'<span class="pill">Complete</span>':'<span class="small">Awaiting scores</span>'}</td></tr>`).join("");
+}
+function renderAdmin(){
+  const arr=Object.values(scores);
+  document.getElementById("adminSummary").textContent=arr.length?`${arr.length} scorecards saved in this browser. Last local refresh: ${new Date().toLocaleString()}.`:"No scores saved yet.";
+}
+document.getElementById("exportBtn").addEventListener("click",()=>{
+  const backup={format:"ppt-competition-backup",version:1,exportedAt:new Date().toISOString(),classes:CLASSES,criteria:CRITERIA,scores};
+  const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=`ppt-competition-backup-${new Date().toISOString().replace(/[:.]/g,"-")}.json`;a.click();URL.revokeObjectURL(url);
+  showStatus("adminStatus",`Backup exported with ${Object.keys(scores).length} scorecards.`);
+});
+document.getElementById("importBtn").addEventListener("click",async()=>{
+  const file=document.getElementById("importFile").files[0];
+  if(!file){showStatus("adminStatus","Choose a JSON backup file first.","err");return;}
+  try{
+    const data=JSON.parse(await file.text());
+    if(data.format!=="ppt-competition-backup"||data.version!==1||!data.scores||typeof data.scores!=="object")throw new Error("Invalid backup format.");
+    for(const [id,e] of Object.entries(data.scores)){
+      if(!e||!CLASSES.includes(Number(e.class))||!sectionsFor(Number(e.class)).includes(e.section)||![1,2,3].some(n=>e.judge===`Judge ${n}`)||!Array.isArray(e.marks)||e.marks.length!==5||!e.marks.every(n=>Number.isInteger(n)&&n>=0&&n<=10))throw new Error(`Invalid scorecard: ${id}`);
+    }
+    if(!confirm("Restore this backup? It will replace all current scores in this browser."))return;
+    scores=data.scores;persist();renderAdmin();renderResults();showStatus("adminStatus",`Restored ${Object.keys(scores).length} scorecards successfully.`);
+  }catch(e){showStatus("adminStatus",`Import failed: ${e.message}`,"err");}
+});
+document.getElementById("clearAll").addEventListener("click",()=>{
+  if(!confirm("Delete ALL scores saved in this browser? Export a backup first. This cannot be undone."))return;
+  scores={};persist();renderAdmin();renderResults();showStatus("adminStatus","All local scorecards were deleted.");
+});
+populateSections();renderResults();renderAdmin();
+</script>
+</body>
+</html>
